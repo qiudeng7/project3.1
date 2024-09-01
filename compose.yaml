@@ -1,0 +1,32 @@
+# 关于compose文件中的变量
+# docker compose 会自动加载.env文件作为变量
+# 或者手动指定env文件 例如: 
+# docker compose --env-file /path/to/myenvfile up
+
+services:
+  crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: project3.1
+    ports:
+      - 80:80
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      RELATION_DB_HOST: ${RELATION_DB_HOST}
+      RELATION_DB_PORT: ${RELATION_DB_PORT}
+      RELATION_DB_USER: ${RELATION_DB_USER}
+      RELATION_DB_PASSWD=: ${RELATION_DB_PASSWD}
+      RELATION_DB_NAME: ${RELATION_DB_NAME}
+
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+      - "${RELATION_DB_PORT}:3306"
+    environment:
+      MYSQL_USER: ${RELATION_DB_USER}
+      MYSQL_PASSWORD: ${RELATION_DB_PASSWD}
+      MYSQL_DATABASE: ${RELATION_DB_NAME}
+    container_name: project3-mysql

@@ -1,0 +1,7 @@
+{
+  "dockerComposeFile": "../docker-compose.yaml",
+  "service": "crawler",
+  "runServices": ["mysql"],
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/workspace"
+}
